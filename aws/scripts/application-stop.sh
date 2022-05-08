@@ -1,8 +1,8 @@
 #!/bin/bash
 set -x
 
-kill -0 `cat $CATALINA_PID` > /dev/null 2>&1
-if [ $? -gt 0 ]
-then
-    echo "Check tomcat" | mailx -s "Tomcat not running" nouranaborwash@gmail.com
+# System control will return either "active" or "inactive".
+tomcat_running=$(systemctl is-active tomcat)
+if [ "$tomcat_running" == "active" ]; then
+    service tomcat stop
 fi
